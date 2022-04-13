@@ -14,6 +14,7 @@
     If you run that program twice it will create a "X" player and "O" player window respectively
    
    (Within the out folders in both files contain an executable .jar file)
+   
    Game in progress:
     ![image](https://user-images.githubusercontent.com/90279410/163098676-4bddebac-7837-4b13-8c8a-239eb70c2c8b.png)
    Player has won (seperate scene):
