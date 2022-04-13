@@ -44,7 +44,7 @@ public class HelloApplication extends Application {
     private String turnplayer="X";
     private String currentplayer = "X";
     public void init() throws IOException {
-        Socket socket = new Socket("localhost", 1234);
+        Socket socket = new Socket("localhost", 1234);//create connection to server program
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         currentplayer = in.readLine();
@@ -92,16 +92,16 @@ public class HelloApplication extends Application {
         stage.setTitle("ClientView!");
         stage.setScene(scene);
         stage.show();
-        //create client thread:
-        pos1.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("0");} catch (IOException e) {e.printStackTrace();}}});
-        pos2.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("1");} catch (IOException e) {e.printStackTrace();}}});
-        pos3.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("2");} catch (IOException e) {e.printStackTrace();}}});
-        pos4.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("3");} catch (IOException e) {e.printStackTrace();}}});
-        pos5.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("4");} catch (IOException e) {e.printStackTrace();}}});
-        pos6.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("5");} catch (IOException e) {e.printStackTrace();}}});
-        pos7.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("6");} catch (IOException e) {e.printStackTrace();}}});
-        pos8.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("7");} catch (IOException e) {e.printStackTrace();}}});
-        pos9.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("8");} catch (IOException e) {e.printStackTrace();}}});
+        //Set up buttons
+        pos1.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("0");} catch (IOException e) {e.printStackTrace();}}});//Button 1
+        pos2.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("1");} catch (IOException e) {e.printStackTrace();}}});//Button 2
+        pos3.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("2");} catch (IOException e) {e.printStackTrace();}}});//Button 3
+        pos4.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("3");} catch (IOException e) {e.printStackTrace();}}});//Button 4
+        pos5.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("4");} catch (IOException e) {e.printStackTrace();}}});//Button 5
+        pos6.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("5");} catch (IOException e) {e.printStackTrace();}}});//Button 6
+        pos7.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("6");} catch (IOException e) {e.printStackTrace();}}});//Button 7
+        pos8.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("7");} catch (IOException e) {e.printStackTrace();}}});//Button 8
+        pos9.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("8");} catch (IOException e) {e.printStackTrace();}}});//Button 9
 
 
         //TIMER STUFF:
@@ -128,10 +128,7 @@ public class HelloApplication extends Application {
             message.setText("Spot is Taken");
             refreshboard();
         }
-        else if (!Objects.equals(currentplayer, turnplayer)){
-            message.setText("Try again later");
-            System.out.println("NOT TURN");
-        }
+        else if (!Objects.equals(currentplayer, turnplayer)){message.setText("Try again later");}
         else {
             out.println(currentplayer + " " + pos);
             out.flush();
@@ -142,6 +139,7 @@ public class HelloApplication extends Application {
             message.setText("");
         }
         checkwin();
+        checkdraw();
     }
     public void refreshboard(){
         pos1.setText(currentboard[0]);
@@ -155,12 +153,19 @@ public class HelloApplication extends Application {
         pos9.setText(currentboard[8]);
     }
     public void clearboard(){for (int i=0;i<9;i++){currentboard[i]="_";}}
+    public void checkdraw(){
+        if (!Objects.equals(currentboard[0], "_") && !Objects.equals(currentboard[1], "_") && !Objects.equals(currentboard[2], "_") && !Objects.equals(currentboard[3], "_") && !Objects.equals(currentboard[4], "_") && !Objects.equals(currentboard[5], "_") && !Objects.equals(currentboard[6], "_") && !Objects.equals(currentboard[7], "_") && !Objects.equals(currentboard[8], "_")){
+            WinLabel.setText("DRAW");
+            stage.setScene(winscene);
+            clearboard();
+        }
+    }
     public void checkwin(){
         if (Objects.equals(currentboard[0], "X") && Objects.equals(currentboard[1], "X") && Objects.equals(currentboard[2], "X") || Objects.equals(currentboard[3], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[5], "X") || Objects.equals(currentboard[6], "X") && Objects.equals(currentboard[7], "X") && Objects.equals(currentboard[8], "X") ||//Horizontal check
                 Objects.equals(currentboard[0], "X") && Objects.equals(currentboard[3], "X") && Objects.equals(currentboard[6], "X") || Objects.equals(currentboard[1], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[7], "X") || Objects.equals(currentboard[2], "X") && Objects.equals(currentboard[5], "X") && Objects.equals(currentboard[8], "X") ||//Vertical Check
                 Objects.equals(currentboard[0], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[8], "X") || Objects.equals(currentboard[2], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[6], "X")){//Diagonal check
             WinLabel.setText("Player X is victorious");
-            stage.setScene(winscene);
+            stage.setScene(winscene); 
             clearboard();
         }
         else if (Objects.equals(currentboard[0], "O") && Objects.equals(currentboard[1], "O") && Objects.equals(currentboard[2], "O") || Objects.equals(currentboard[3], "O") && Objects.equals(currentboard[4], "O") && Objects.equals(currentboard[5], "O") || Objects.equals(currentboard[6], "O") && Objects.equals(currentboard[7], "O") && Objects.equals(currentboard[8], "O") ||//Horizontal check
@@ -172,20 +177,6 @@ public class HelloApplication extends Application {
         }
         //System.out.println(Arrays.toString(currentboard));
     }
-//    public boolean checkturn() throws IOException {
-//        boolean Xturn = true;
-//        out.println("B"+" "+"0");
-//        try{line = in.readLine();}
-//        catch(IOException e){e.printStackTrace();}
-//        System.out.println(line);
-//        if (line == currentplayer){
-//            Xturn = true;
-//        }
-//        else{
-//            Xturn = false;
-//        }
-//        return Xturn;
-//    }
     // CLIENT CLASS:
     public static void main(String[] args) {launch();}
 }

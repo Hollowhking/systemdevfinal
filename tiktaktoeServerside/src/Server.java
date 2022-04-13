@@ -36,6 +36,7 @@ public class Server {
                     ClientHandler clientSock = new ClientHandler(client);
                     if (currentplayer == "X"){currentplayer = "O";}
                     else {currentplayer = "X";}
+                    clearboard();
                     // This thread will handle the client
                     // separately
                     new Thread(clientSock).start();
@@ -88,6 +89,7 @@ public class Server {
                                 if (Objects.equals(line[0], "X")){orderplayer = "O";}
                                 else if (Objects.equals(line[0], "O")){orderplayer = "X";}
                                 System.out.println("Current Turn: "+orderplayer);
+                                checkwin();
                             }
                         }
                     }
@@ -124,6 +126,19 @@ public class Server {
         public String sendboard(){
             String boardstring = board[0]+" "+board[1]+" "+board[2]+" "+board[3]+" "+board[4]+" "+board[5]+" "+board[6]+" "+board[7]+" "+board[8];
             return boardstring;
+        }
+        public void checkwin(){
+            if (Objects.equals(board[0], "X") && Objects.equals(board[1], "X") && Objects.equals(board[2], "X") || Objects.equals(board[3], "X") && Objects.equals(board[4], "X") && Objects.equals(board[5], "X") || Objects.equals(board[6], "X") && Objects.equals(board[7], "X") && Objects.equals(board[8], "X") ||//Horizontal check
+                    Objects.equals(board[0], "X") && Objects.equals(board[3], "X") && Objects.equals(board[6], "X") || Objects.equals(board[1], "X") && Objects.equals(board[4], "X") && Objects.equals(board[7], "X") || Objects.equals(board[2], "X") && Objects.equals(board[5], "X") && Objects.equals(board[8], "X") ||//Vertical Check
+                    Objects.equals(board[0], "X") && Objects.equals(board[4], "X") && Objects.equals(board[8], "X") || Objects.equals(board[2], "X") && Objects.equals(board[4], "X") && Objects.equals(board[6], "X")){//Diagonal check
+                clearboard();
+            }
+            else if (Objects.equals(board[0], "O") && Objects.equals(board[1], "O") && Objects.equals(board[2], "O") || Objects.equals(board[3], "O") && Objects.equals(board[4], "O") && Objects.equals(board[5], "O") || Objects.equals(board[6], "O") && Objects.equals(board[7], "O") && Objects.equals(board[8], "O") ||//Horizontal check
+                    Objects.equals(board[0], "O") && Objects.equals(board[3], "O") && Objects.equals(board[6], "O") || Objects.equals(board[1], "O") && Objects.equals(board[4], "O") && Objects.equals(board[7], "O") || Objects.equals(board[2], "O") && Objects.equals(board[5], "O") && Objects.equals(board[8], "O") ||//Vertical Check
+                    Objects.equals(board[0], "O") && Objects.equals(board[4], "O") && Objects.equals(board[8], "O") || Objects.equals(board[2], "O") && Objects.equals(board[4], "O") && Objects.equals(board[6], "O")){//Diagonal check
+                clearboard();
+            }
+            //System.out.println(Arrays.toString(board));
         }
     }
 
