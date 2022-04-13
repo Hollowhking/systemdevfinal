@@ -25,3 +25,5 @@
 ## Team Members:
 * Joshua Trower 100791683
 * Carl Reina 100780526
+* Umair Mohammed 100797124
+* Victor Ma 100789474
