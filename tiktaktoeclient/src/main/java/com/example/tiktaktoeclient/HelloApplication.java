@@ -30,6 +30,8 @@ public class HelloApplication extends Application {
     Button pos7 = new Button("7");
     Button pos8 = new Button("8");
     Button pos9 = new Button("9");
+    Button getstats = new Button("Get Statistics:");
+    Label statlabel = new Label();
 
     Label WinLabel = new Label();
     PrintWriter out = null;
@@ -41,6 +43,7 @@ public class HelloApplication extends Application {
     Scene winscene = new Scene(WinLabel,500,500);
     Timer timer = new Timer();
     volatile String[] currentboard = new String[9];
+    public String[] stats = new String[3];
     private String turnplayer="X";
     private String currentplayer = "X";
     public void init() throws IOException {
@@ -88,6 +91,8 @@ public class HelloApplication extends Application {
         clientgroup.add(player,0,0);
         clientgroup.add(gamegrid,0,1);
         clientgroup.add(message,0,2);
+        clientgroup.add(getstats,0,3);
+        clientgroup.add(statlabel,1,3);
         Scene scene = new Scene(clientgroup,500,500);
         stage.setTitle("ClientView!");
         stage.setScene(scene);
@@ -103,7 +108,15 @@ public class HelloApplication extends Application {
         pos8.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("7");} catch (IOException e) {e.printStackTrace();}}});//Button 8
         pos9.setOnAction(new EventHandler<ActionEvent>() {@Override public void handle(ActionEvent actionEvent) {try {turn("8");} catch (IOException e) {e.printStackTrace();}}});//Button 9
 
-
+        getstats.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                out.println("C"+" "+" 12");
+                try{line = in.readLine();}catch (IOException e){e.printStackTrace();}
+                stats = line.split(" ");
+                statlabel.setText("Total Games: "+stats[0]+" Player X wins: "+stats[1]+" Player O wins: "+stats[2]);
+            }
+        });
         //TIMER STUFF:
         timer.schedule(new TimerTask() {
             @Override
@@ -165,7 +178,7 @@ public class HelloApplication extends Application {
                 Objects.equals(currentboard[0], "X") && Objects.equals(currentboard[3], "X") && Objects.equals(currentboard[6], "X") || Objects.equals(currentboard[1], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[7], "X") || Objects.equals(currentboard[2], "X") && Objects.equals(currentboard[5], "X") && Objects.equals(currentboard[8], "X") ||//Vertical Check
                 Objects.equals(currentboard[0], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[8], "X") || Objects.equals(currentboard[2], "X") && Objects.equals(currentboard[4], "X") && Objects.equals(currentboard[6], "X")){//Diagonal check
             WinLabel.setText("Player X is victorious");
-            stage.setScene(winscene); 
+            stage.setScene(winscene);
             clearboard();
         }
         else if (Objects.equals(currentboard[0], "O") && Objects.equals(currentboard[1], "O") && Objects.equals(currentboard[2], "O") || Objects.equals(currentboard[3], "O") && Objects.equals(currentboard[4], "O") && Objects.equals(currentboard[5], "O") || Objects.equals(currentboard[6], "O") && Objects.equals(currentboard[7], "O") && Objects.equals(currentboard[8], "O") ||//Horizontal check
