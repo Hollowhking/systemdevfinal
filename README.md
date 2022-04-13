@@ -16,7 +16,7 @@
    (Within the out folders in both files contain an executable .jar file)
    
    Game in progress:
-    ![image](https://user-images.githubusercontent.com/90279410/163098676-4bddebac-7837-4b13-8c8a-239eb70c2c8b.png)
+    ![image](https://user-images.githubusercontent.com/90279410/163274382-be21d2ac-d247-422a-8465-058a8d046288.png)
    Player has won (seperate scene):
     ![image](https://user-images.githubusercontent.com/90279410/163098751-561ea63e-91e0-4cc6-89e5-e917a1b64fe4.png)
     
