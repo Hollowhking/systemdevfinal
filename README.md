@@ -1,6 +1,6 @@
 # systemdevfinal TicTacToe Game JavaFX
   How to run:
-  Copy folders to your computer and open each folder with intellij 
+  Copy folders to your computer and open each folder with intellij\\
   ###Starting the server:
     simply run the main in the server class within the:
     >tiktaktoeServerside\src\Server
