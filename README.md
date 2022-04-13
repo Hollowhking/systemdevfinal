@@ -3,11 +3,11 @@
   
   Copy folders to your computer and open each folder with intellij
   
-  ###Starting the server:
+  ##Starting the server:
   
     simply run the main in the server class within the:
     >tiktaktoeServerside\src\Server
-  ###Starting a player:
+  ##Starting a player:
   
     simply run the main function in the Client class within
     >tiktaktoeclient\src\main\com.\HelloApplication
